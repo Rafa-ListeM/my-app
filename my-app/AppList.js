@@ -1,28 +1,30 @@
 import { StatusBar } from 'expo-status-bar';
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, ScrollView } from 'react-native';
 import AppItem from './AppItem';
 import Database from './Database';
 
 export default function AppList({ route, navigation }) {
   const [items, setItems] = useState([]);
-  
+
   useEffect(() => {
-      Database.getItems().then(items => setItems(items));
+    Database.getItems().then(items => setItems(items));
   }, [route]);
 
-return (
-  <View style={styles.container}>
-      <StatusBar style="light" />
-      <Text style={styles.title}>Lista de Compras</Text>
-      <ScrollView 
+  return (
+    <ScrollView>
+      <View style={styles.container}>
+        <StatusBar style="light" />
+        <Text style={styles.title}>Lista de Compras</Text>
+        <ScrollView
           style={styles.scrollContainer}
           contentContainerStyle={styles.itemsContainer}>
-          { items.map(item => {
-              return <AppItem key={item.id} id={item.id} item={item.quantidade + '  de ' + item.descricao} navigation={navigation} />
-          }) }
+          {items.map(item => {
+            return <AppItem key={item.id} id={item.id} item={item.quantidade + '  de ' + item.descricao} navigation={navigation} />
+          })}
+        </ScrollView>
+      </View>
       </ScrollView>
-  </View>
   );
 }
 
